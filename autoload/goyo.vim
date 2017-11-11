@@ -219,21 +219,6 @@ function! s:goyo_on(dim)
     SignifyToggle
   endif
 
-  " vim-airline
-  let t:goyo_disabled_airline = exists('#airline')
-  if t:goyo_disabled_airline
-    AirlineToggle
-  endif
-
-  " vim-powerline
-  let t:goyo_disabled_powerline = exists('#PowerlineMain')
-  if t:goyo_disabled_powerline
-    augroup PowerlineMain
-      autocmd!
-    augroup END
-    augroup! PowerlineMain
-  endif
-
   " lightline.vim
   let t:goyo_disabled_lightline = exists('#lightline')
   if t:goyo_disabled_lightline
@@ -317,8 +302,6 @@ function! s:goyo_off()
   let goyo_revert             = t:goyo_revert
   let goyo_disabled_gitgutter = t:goyo_disabled_gitgutter
   let goyo_disabled_signify   = t:goyo_disabled_signify
-  let goyo_disabled_airline   = t:goyo_disabled_airline
-  let goyo_disabled_powerline = t:goyo_disabled_powerline
   let goyo_disabled_lightline = t:goyo_disabled_lightline
   let goyo_orig_buffer        = t:goyo_master
   let [line, col]             = [line('.'), col('.')]
@@ -360,25 +343,8 @@ function! s:goyo_off()
     endif
   endif
 
-  if goyo_disabled_airline && !exists('#airline')
-    AirlineToggle
-    " For some reason, Airline requires two refreshes to avoid display
-    " artifacts
-    silent! AirlineRefresh
-    silent! AirlineRefresh
-  endif
-
-  if goyo_disabled_powerline && !exists('#PowerlineMain')
-    doautocmd PowerlineStartup VimEnter
-    silent! PowerlineReloadColorscheme
-  endif
-
   if goyo_disabled_lightline
     silent! call lightline#enable()
-  endif
-
-  if exists('#Powerline')
-    doautocmd Powerline ColorScheme
   endif
 
   if exists('g:goyo_callbacks[1]')
