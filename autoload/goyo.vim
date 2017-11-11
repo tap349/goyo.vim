@@ -364,7 +364,7 @@ endfunction
 
 function! s:parse_arg(arg)
   if exists('g:goyo_height') || !exists('g:goyo_margin_top') && !exists('g:goyo_margin_bottom')
-    let height = s:relsz(get(g:, 'goyo_height', '85%'), &lines)
+    let height = s:relsz(get(g:, 'goyo_height', '90%'), &lines)
     let yoff = 0
   else
     let top = max([0, s:relsz(get(g:, 'goyo_margin_top', 4), &lines)])
