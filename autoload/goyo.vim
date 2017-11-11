@@ -107,7 +107,8 @@ endfunction
 
 function! s:tranquilize()
   let bg = s:get_color('Normal', 'bg#')
-  for grp in ['NonText', 'FoldColumn', 'ColorColumn', 'VertSplit',
+
+  for grp in ['NonText', 'FoldColumn', 'VertSplit',
             \ 'StatusLine', 'StatusLineNC', 'SignColumn']
     " -1 on Vim / '' on GVim
     if bg == -1 || empty(bg)
@@ -115,6 +116,16 @@ function! s:tranquilize()
       call s:set_color(grp, 'bg', 'NONE')
     else
       call s:set_color(grp, 'fg', bg)
+      call s:set_color(grp, 'bg', bg)
+    endif
+    call s:set_color(grp, '', 'NONE')
+  endfor
+
+  " don't set fg for ColorColumn
+  for grp in ['ColorColumn']
+    if bg == -1 || empty(bg)
+      call s:set_color(grp, 'bg', 'NONE')
+    else
       call s:set_color(grp, 'bg', bg)
     endif
     call s:set_color(grp, '', 'NONE')
